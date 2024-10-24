@@ -27,11 +27,11 @@ function App() {
     });
     setCategories(temp);
   }
-  const deleteCategory = () => {
+  const deleteCategory = (category) => {
 
     const temp = [];
     categories.map((item, index) => {
-      if (item.id !== category.id) {
+      if (item.id != category.id) {
         temp.push(item)
       }
     });
@@ -45,27 +45,26 @@ function App() {
     name: '',
     category: -1,
     amount: 0.00,
-    type: '0', //0=expensive, 1=income,
+    recordType: 'Expense', //0=expensive, 1=income,
     datetime: Date(),
     note: ''
   });
 
-  const [record, setRecord] = useState(initialRecord);
+  const [expense, setExpense] = useState(initialRecord);
   const [editingExpense, setEditingExpense] = useState();
 
   const newRecord = () => {
-    setRecord(
-      {
-        id: nanoid(),
-        name: '',
-        category: -1,
-        amount: 0.00,
-        type: '0', //0=expensive, 1=income,
-        datetime: Date(),
-        note: ''
-      }
-    );
-    console.log(record)
+    console.log('test')
+    const newRecord = {
+      id: nanoid(),
+      name: '',
+      category: -1,
+      amount: 0.00,
+      recordType: 'Expense', //0=expensive, 1=income,
+      datetime: Date(),
+      note: ''
+    };
+    setExpense(newRecord);
   }
 
   const updateRecord = (record) => {
@@ -79,20 +78,43 @@ function App() {
         temp.push(item);
       }
     });
-    if(!isSave) temp.push(record);
-    console.log(record);
-    console.log(temp);
+    if (!isSave) temp.push(record);
+    newRecord();
     setExpensies(temp);
+  }
+
+  const deletedRecord = (record) => {
+    console.log(record)
+    const temp = [];
+    expensies.map((item, index) => {
+      if (item.id !== record.id) {
+        temp.push(item);
+      }
+    });
+    newRecord();
+    setExpensies(temp);
+  }
+  const setEditingRecord = (item) => {
+    console.log(item);
+    console.log(expense)
+    setExpense(item);
+    console.log(expense)
+  }
+
+
+  const updateExpenseRecord = (item) => {
+    setExpense(item)
+    console.log(item)
   }
 
   return (
     <>
       <div className='container'>
         <div>
-          <ExpenseRecordForm categories={categories} record={record} newRecord={newRecord} updateRecord={updateRecord} />
+          <ExpenseRecordForm categories={categories} expense={expense} newRecord={newRecord} updateRecord={updateRecord} updateExpenseRecord={updateExpenseRecord} />
         </div>
         <div>
-          <ExpenseRecordList expensies={expensies} />
+          <ExpenseRecordList expensies={expensies} deletedRecord={deletedRecord} setEditingRecord={setEditingRecord} />
         </div>
         <div>
           <Category cate={categories} createNewCategory={createNewCategory} updateCategory={updateCategory} deleteCategory={deleteCategory} />

@@ -1,86 +1,90 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function ExpenseRecordForm({ categories, record, updateRecord, newRecord }) {
-
-    const [editRecord, setEditRecord] = useState(record);
-
+export default function ExpenseRecordForm({ categories, expense, updateRecord, newRecord, updateExpenseRecord }) {
+    console.log(expense.recordType)
 
     const onChangeRecodeName = (e) => {
         e.preventDefault();
-        setEditRecord({ ...editRecord, name: e.target.value });
+        const record = { ...expense, name: e.target.value };
+        updateExpenseRecord(record);
     }
     const onChangeCategory = (e) => {
         e.preventDefault();
-        setEditRecord({ ...editRecord, category: e.target.value })
+        const record = { ...expense, category: e.target.value };
+        updateExpenseRecord(record);
     }
     const onChangeAmount = (e) => {
         e.preventDefault();
-        setEditRecord({ ...editRecord, amount: e.target.value })
+        const record = { ...expense, amount: e.target.value };
+        updateExpenseRecord(record);
     }
-    const handleClick = (e) => {
+    const handleOptionChange = (e) => {
+        console.log(e.target.value)
         e.preventDefault();
-        setEditRecord({ ...editRecord, type: e.target.value })
+        const record = { ...expense, recordType: e.target.value };
+        console.log(record)
+        updateExpenseRecord(record);
     }
     const onChangeNote = (e) => {
         e.preventDefault();
-        setEditRecord({ ...editRecord, note: e.target.value })
+        const record = { ...expense, note: e.target.value };
+        updateExpenseRecord(record);
     }
     const onSubmitForm = (e) => {
         e.preventDefault();
-        updateRecord(editRecord);
+        updateRecord(expense);
     }
     const handleClear = (e) => {
         e.preventDefault();
+        console.log('before run handle Clear')
         newRecord();
+        console.log(expense)
+        console.log('after run handle Clear')
     }
 
     return (<>
         <h2>Create / Edit Record</h2>
         <form onSubmit={onSubmitForm}>
             <div>
-                <label>Name: <input type="text" name='name' value={editRecord.name} onChange={onChangeRecodeName}  /></label>
+                <label>Name: <input type="text" name='name' value={expense.name} onChange={onChangeRecodeName} /></label>
             </div>
             <div>
                 <label>Category:
-                <select name="category" onChange={onChangeCategory} value={editRecord.category}>
-                    {
-                        categories && categories.map((cate, index) => {
-                            return (
-                                <option key={index} value={cate.id}>{cate.name}</option>
-                            )
-                        })
-                    }
-                </select>
+                    <select name="category" onChange={onChangeCategory} value={expense.category}>
+                        {
+                            categories && categories.map((cate, index) => {
+                                return (
+                                    <option key={index} value={cate.id}>{cate.name}</option>
+                                )
+                            })
+                        }
+                    </select>
                 </label>
             </div>
             <div>
-                <label>Amount: <input type="number" name='amount' value={editRecord.amount} onChange={onChangeAmount} /></label>
+                <label>Amount: <input type="number" name='amount' value={expense.amount} onChange={onChangeAmount} /></label>
             </div>
             <div>
                 <label >Type</label>
                 <label>
-                    <input type="radio" name='type' value='0'
-                        onClick={handleClick}
-                        defaultChecked={editRecord.type == '0'}
-                    />
+                    <input type="radio" value="Income" checked={expense.recordType == 'Income'} onChange={handleOptionChange} />
+
                     Income</label>
                 <label>
-                    <input type="radio" name='type' value='1'
-                        onClick={handleClick}
-                        defaultChecked={editRecord.type == '1'}
-                    />
-                    Expense</label>
+                    <input type="radio" value="Expense" checked={expense.recordType == 'Expense'} onChange={handleOptionChange} />
+                    Expense
+                </label>
             </div>
             <div>
-                <label >Date 
-                <DatePicker selected={editRecord.datetime} /></label>
+                <label >Date
+                    <DatePicker selected={expense.datetime} /></label>
             </div>
             <div>
-                <label>Note 
-                <input type="text" name='name' value={editRecord.note} onChange={onChangeNote} />
+                <label>Note
+                    <input type="text" name='name' value={expense.note} onChange={onChangeNote} />
                 </label>
             </div>
             <button onClick={onSubmitForm}>Submit</button>

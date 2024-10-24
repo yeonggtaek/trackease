@@ -4,7 +4,7 @@ export const expense = [
         name: 'Bus 123',
         category: 13,
         amount: 2.65,
-        type: '0', //0=expensive, 1=income,
+        recordType: 'Expense', //0=expensive, 1=income,
         datetime: '2024-10-17T12:25:43.511Z',
         note: ''
     },
@@ -13,7 +13,7 @@ export const expense = [
         name: 'Bus 123',
         category: 13,
         amount: 2.65,
-        type: '0', //0=expensive, 1=income,
+        recordType: 'Expense', //0=expensive, 1=income,
         datetime: '2024-10-17T18:25:43.511Z',
         note: ''
     },
@@ -22,7 +22,7 @@ export const expense = [
         name: 'mcdonald\'s',
         category: 2,
         amount: 12.65,
-        type: '0', //0=expensive, 1=income,
+        recordType: 'Expense', //0=expensive, 1=income,
         datetime: '2024-10-17T12:25:43.511Z',
         note: ''
     },
@@ -31,7 +31,7 @@ export const expense = [
         name: 'mcdonald\'s',
         category: 2,
         amount: 8.75,
-        type: '0', //0=expensive, 1=income,
+        recordType: 'Expense', //0=expensive, 1=income,
         datetime: '2024-10-17T14:25:43.511Z',
         note: ''
     },
@@ -40,7 +40,7 @@ export const expense = [
         name: 'TimHortorn',
         category: 2,
         amount: 8.75,
-        type: '0', //0=expensive, 1=income,
+        recordType: 'Expense', //0=expensive, 1=income,
         datetime: '2024-10-17T14:25:43.511Z',
         note: ''
     }
